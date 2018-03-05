@@ -1,6 +1,7 @@
 ( function(){
 
   'use strict';
+
   const getObjectType = x => Object.prototype.toString.call(x);
 
   const getStringId = ruleStr => {
@@ -12,6 +13,7 @@
       case 'array'    : { return '[object Array]'; }
       case 'regex'    : { return '[object RegExp]'; }
       case 'function' : { return '[object Function]'; }
+      case 'any'      : { return '[object Any]'; }
       default         : { return null; } 
     }
   }
@@ -84,6 +86,10 @@
       const argsTypes = args.map(getObjectType);
 
       for ( const index of Object.keys(typesArray) ) {
+        if ( typesArray[index].rules.includes('[object Any]') ) {
+          continue;
+        }
+
         if ( typesArray[index].optional ) {
           if ( args[index] === undefined || args[index] === null ) {
             continue;
@@ -104,6 +110,7 @@
 
             if ( originalType === '[object Object]' ) {
               console.warn('Not implemented Yet...');
+              passed = true;
               continue;
             }
 
