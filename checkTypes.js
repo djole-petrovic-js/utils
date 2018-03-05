@@ -86,14 +86,14 @@
       const argsTypes = args.map(getObjectType);
 
       for ( const index of Object.keys(typesArray) ) {
-        if ( typesArray[index].rules.includes('[object Any]') ) {
-          continue;
-        }
-
         if ( typesArray[index].optional ) {
           if ( args[index] === undefined || args[index] === null ) {
             continue;
           }
+        }
+
+        if ( typesArray[index].rules.includes('[object Any]') ) {
+          continue;
         }
 
         if ( !typesArray[index].rules.includes(argsTypes[index]) ) {
