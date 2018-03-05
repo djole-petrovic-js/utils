@@ -1,45 +1,50 @@
-class LinQ {
-  constructor(items) {
-    this.items = items;
-  }
+( function(){
 
-  get() {
-    return this.items;
-  }
+  'use strict';
 
-  orderBy(fn) {
-    this.items = this.items.sort(fn);
+  class LinQ {
+    constructor(items) {
+      this.items = items;
+    }
 
-    return this;
-  }
+    get() {
+      return this.items;
+    }
 
-  select(fn) {
-    this.items = this.items.map(x => fn(x));
+    orderBy(fn) {
+      this.items = this.items.sort(fn);
 
-    return this;
-  }
+      return this;
+    }
 
-  where(fn) {
-    this.items = this.items.filter(x => fn(x));
+    select(fn) {
+      this.items = this.items.map(fn);
 
-    return this;
-  }
+      return this;
+    }
 
-  count(fn) {
-    if ( fn ) {
-      return this.where(fn).items.length;
-    } else {
-      return this.items.length;        
+    where(fn) {
+      this.items = this.items.filter(fn);
+
+      return this;
+    }
+
+    count(fn) {
+      if ( fn ) {
+        return this.where(fn).items.length;
+      } else {
+        return this.items.length;        
+      }
+    }
+
+    first() {
+      return this.items.length > 0 ? this.items[0] : null;
+    }
+
+    firstOrDefault(dft) {
+      return this.first() || dft;
     }
   }
 
-  first() {
-    return this.items.length > 0 ? this.items[0] : null;
-  }
+}());
 
-  firstOrDefault(dft) {
-    const first = this.first();
-
-    return first ? first : dft;
-  }
-}

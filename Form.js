@@ -152,6 +152,12 @@
         this._fieldsToStopValidating.push(field);
       }
 
+      same(field,fieldToMatch) {
+        if ( this._formValues[field] !== this._formValues[fieldToMatch] ) {
+          this._pushError(`Field ${ field } needs to be same as ${ fieldToMatch }`);
+        }
+      }
+
       regex(field,regexString,flags = '') {
         const regex = new RegExp(regexString,flags);
 
