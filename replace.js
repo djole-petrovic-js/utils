@@ -11,13 +11,13 @@
       return replace.bind(null,str);
     }
 
-    if ( Array.isArray(values) ) {
-      values.forEach(x => str = str.replace(/\?/,x));
-    } else {
-      Object.keys(values).forEach(
-        key => str = str.replace(new RegExp(':' + key),values[key])
-      );
-    }
+    const iterator = Array.isArray(values) ? values : Object.keys(values);
+
+    const callback = Array.isArray(values)
+      ? x => str = str.replace(/\?/,x)
+      : key => str = str.replace(new RegExp(':' + key),values[key])
+
+    iterator.forEach(callback);
 
     return str;
   }
