@@ -11,10 +11,12 @@
       return replace.bind(null,str);
     }
 
-    const iterator = Array.isArray(values) ? values : Object.keys(values);
+    const isArray = Array.isArray(values);
 
-    const callback = Array.isArray(values)
-      ? x => str = str.replace(/\?/,x)
+    const iterator = isArray ? values : Object.keys(values);
+
+    const callback = isArray
+      ? x   => str = str.replace(/\?/,x)
       : key => str = str.replace(new RegExp(':' + key),values[key])
 
     iterator.forEach(callback);
